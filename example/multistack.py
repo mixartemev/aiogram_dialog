@@ -5,7 +5,7 @@ import operator
 
 from aiogram import Bot, Dispatcher
 from aiogram.dispatcher.filters import Command
-from aiogram.dispatcher.fsm.storage.memory import MemoryStorage
+from aiogram.dispatcher.fsm.storage.redis import RedisStorage
 from aiogram.dispatcher.fsm.state import StatesGroup, State
 from aiogram.types import Message, CallbackQuery
 
@@ -74,7 +74,7 @@ async def start(m: Message, dialog_manager: DialogManager):
 async def main():
     # real main
     logging.basicConfig(level=logging.INFO)
-    storage = MemoryStorage()
+    storage = RedisStorage.from_url('redis://127.0.0.1:6379')
     bot = Bot(token=API_TOKEN)
     dp = Dispatcher(storage=storage)
     registry = DialogRegistry(dp)
